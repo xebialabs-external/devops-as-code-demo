@@ -40,6 +40,7 @@ jobs:
               cpsScm {
                   scm {
                       git {
+                          branch("master")
                           remote {
                         	credentials('github-credentials')
                         	url('https://github.com/xebialabs/e-commerce-microservice.git')
@@ -70,3 +71,8 @@ credentials:
             id:       xlr-credentials
             username: admin
             password: admin
+        - usernamePassword:
+            scope:    GLOBAL
+            id:       docker-login
+            username: ${DOCKER_USER}
+            password: ${DOCKER_PASS}
