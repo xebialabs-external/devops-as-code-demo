@@ -28,6 +28,7 @@ services:
   jenkins:
     build: docker/jenkins
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./docker/jenkins/jenkins.yaml:/var/jenkins_home/casc_configs/jenkins.yaml
     environment:
       - CASC_JENKINS_CONFIG=/var/jenkins_home/casc_configs/jenkins.yaml
@@ -41,7 +42,7 @@ services:
     image: tecnativa/docker-socket-proxy:latest
     privileged: true
     volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
+      - /var/run/docker.sock:/var/run/docker.sock
     environment: # warning this potentially opens up a security hole :)
       - AUTH=1
       - BUILD=1
