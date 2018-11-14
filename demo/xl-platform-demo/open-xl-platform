@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+SGID=$(aws ec2 describe-security-groups --filter "Name=group-name,Values=`whoami`-xl-platform-ecs-security-group" --output text --query 'SecurityGroups[0].GroupId')
+PUBIP=$(aws ec2 describe-network-interfaces --filter="Name=group-id,Values=$SGID" --output text --query 'NetworkInterfaces[0].Association.PublicIp')
+echo "Access XL Deploy at http://$PUBIP:4516"
+echo "Access XL Release at http://$PUBIP:5516"
+
+# The open command only works on macOS
+if [ `uname -s` == "Darwin" ]; then
+  open "http://$PUBIP:4516"
+  open "http://$PUBIP:5516"
+fi

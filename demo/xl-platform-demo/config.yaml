@@ -1,0 +1,8 @@
+xl-deploy:
+  password: q1djvIMvBH0WitkiC6f6ETl398kCgL6WimjiaAqUq5s=
+  url: http://18.218.142.147:4516/
+  username: admin
+xl-release:
+  password: EHpa2H2t5wEOvDWywVnx/Qnf3+O6TcNPJEDMcE0DDNA=
+  url: http://18.218.142.147:5516/
+  username: admin
