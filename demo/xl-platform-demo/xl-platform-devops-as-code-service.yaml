@@ -4,15 +4,15 @@ spec:
 - name: xl-platform
   type: core.Directory
   children:
-    - name: xl-deploy-devops-as-code
+    - name: xl-platform-devops-as-code
       type: udm.Application
       children:
       - name: '1.0'
         type: udm.DeploymentPackage
         deployables:
-        - name: xl-deploy-devops-as-code-service
+        - name: xl-platform-devops-as-code-service
           type: aws.ecs.ServiceSpec
-          serviceName: xl-deploy-devops-as-code-service
+          serviceName: xl-platform-devops-as-code-service
           desiredCount: 1
           launchType: FARGATE
           networkMode: awsvpc
