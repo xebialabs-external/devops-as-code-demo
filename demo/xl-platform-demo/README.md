@@ -9,6 +9,8 @@ This is directory uses your local XL Deploy to deploy the XL Platform to an AWS 
 
 ### Prestep: push the customized XL Platform images to ECR
 
+ONLY DO THIS WHEN CHANGING THE XL PLATFORM IMAGES
+
 The latest image we want for AVIS deployed to [ECR](https://console.aws.amazon.com/ecs/home?region=us-east-1#/repositories) (yes, in us-east-1 instead of 2). I basically did this:
 
 ```
