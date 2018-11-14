@@ -1,0 +1,68 @@
+apiVersion: xl-deploy/v1beta1
+kind: Applications
+spec:
+- name: xl-platform
+  type: core.Directory
+  children:
+    - name: xl-deploy-devops-as-code
+      type: udm.Application
+      children:
+      - name: '1.0'
+        type: udm.DeploymentPackage
+        deployables:
+        - name: xl-deploy-devops-as-code-service
+          type: aws.ecs.ServiceSpec
+          serviceName: xl-deploy-devops-as-code-service
+          desiredCount: 1
+          launchType: FARGATE
+          networkMode: awsvpc
+          assignPublicIp: true
+          cpu: 4096
+          memory: 8192
+          executionRole: arn:aws:iam::932770550094:role/ecsTaskExecutionRole
+          subnets:
+          - 'Name:{{username}}-ror-ecs-subnet-ipv4-az-1a'
+          - 'Name:{{username}}-ror-ecs-subnet-ipv4-az-1b'
+          securityGroups:
+          - 'Name:{{username}}-ror-ecs-security-group'
+          containerDefinitions:
+          - name: xl-release
+            containerName: xl-release
+            type: aws.ecs.ContainerDefinitionSpec
+            image: 932770550094.dkr.ecr.us-east-1.amazonaws.com/devops-as-code-demo/xl-release:latest
+            cpu: 2048
+            softMemoryLimit: 4096
+            portMappings:
+            - name: port-mapping-5516
+              type: aws.ecs.PortSpec
+              containerPort: 5516
+            logConfiguration:
+            - name: xl-release-logs
+              type: aws.ecs.LogConfigurationSpec
+              logDriver: awslogs
+              options:
+                awslogs-group: vlussenburg-devops-as-code
+                awslogs-region: us-east-2
+                awslogs-stream-prefix: xl-release
+            environment:
+              ADMIN_PASSWORD: hatseflats
+          - name: xl-deploy
+            containerName: xl-deploy
+            type: aws.ecs.ContainerDefinitionSpec
+            image: 932770550094.dkr.ecr.us-east-1.amazonaws.com/devops-as-code-demo/xl-deploy:latest
+            cpu: 2048
+            softMemoryLimit: 4096
+            portMappings:
+            - name: port-mapping-4516
+              type: aws.ecs.PortSpec
+              containerPort: 4516
+            logConfiguration:
+            - name: xl-deploy-logs
+              type: aws.ecs.LogConfigurationSpec
+              logDriver: awslogs
+              options:
+                awslogs-group: vlussenburg-devops-as-code
+                awslogs-region: us-east-2
+                awslogs-stream-prefix: xl-deploy
+            environment:
+              ADMIN_PASSWORD: hatseflats

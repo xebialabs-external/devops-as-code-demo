@@ -1,0 +1,67 @@
+apiVersion: xl-deploy/v1beta1
+kind: Applications
+spec:
+- name: xl-platform
+  type: core.Directory
+  children:
+    - name: rest-o-rant-ecs-fargate-cluster
+      type: udm.Application
+      children:
+      - name: '1.0'
+        type: udm.DeploymentPackage
+        deployables:
+# ECS cluster (no instances, FARGATE only)
+        - name: xl-platform-ecs-cluster
+          type: aws.ecs.ClusterSpec
+          clusterName: '{{username}}-xl-platform-ecs-cluster'
+          region: '{{region}}'
+
+# Networking
+        - name: xl-platform-ecs-vpc
+          type: aws.vpc.VPCSpec
+          vpcName: '{{username}}-xl-platform-ecs-vpc'
+          dnsHostnames: true
+          region: '{{region}}'
+          cidrBlock: 10.0.0.0/16
+          createInternetGateway: true
+          internetGatewayName: '{{username}}-xl-platform-ecs-igw'
+        - name: xl-platform-ecs-subnet-ipv4-az-1a
+          type: aws.vpc.SubnetSpec
+          subnetName: '{{username}}-xl-platform-ecs-subnet-ipv4-az-1a'
+          region: '{{region}}'
+          availabilityZone: '{{region}}a'
+          vpc: 'Name:{{username}}-xl-platform-ecs-vpc'
+          cidrBlock: 10.0.0.0/24
+        - name: xl-platform-ecs-subnet-ipv4-az-1b
+          type: aws.vpc.SubnetSpec
+          subnetName: '{{username}}-xl-platform-ecs-subnet-ipv4-az-1b'
+          region: '{{region}}'
+          availabilityZone: '{{region}}b'
+          vpc: 'Name:{{username}}-xl-platform-ecs-vpc'
+          cidrBlock: 10.0.1.0/24
+        - name: xl-platform-ecs-route-table
+          type: aws.vpc.RouteTableSpec
+          routeTableName: '{{username}}-xl-platform-ecs-route-table'
+          region: '{{region}}'
+          vpc: 'Name:{{username}}-xl-platform-ecs-vpc'
+          is_main: true
+          subnets:
+          - 'Name:{{username}}-xl-platform-ecs-subnet-ipv4-az-1a'
+          - 'Name:{{username}}-xl-platform-ecs-subnet-ipv4-az-1b'
+          routes:
+          - name: route1
+            type: aws.vpc.RouteSpec
+            ipv4Address: 0.0.0.0/0
+            gatewayId: 'Name:{{username}}-xl-platform-ecs-igw'
+        - name: xl-platform-ecs-security-group
+          type: aws.vpc.SecurityGroupSpec
+          securityGroupName: '{{username}}-xl-platform-ecs-security-group'
+          description: Created by XL Deploy
+          region: '{{region}}'
+          vpc: 'Name:{{username}}-xl-platform-ecs-vpc'
+          inboundRules:
+          - name: inbound
+            type: aws.vpc.SecurityGroupInboundRuleSpec
+            protocol: -1
+            portRange: 22
+            source: 0.0.0.0/0
