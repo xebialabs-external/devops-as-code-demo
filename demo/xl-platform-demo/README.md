@@ -1,4 +1,4 @@
-# REST-o-rant on AWS EC2 Container Service (ECS) with Fargate
+# AVIS demo on AWS EC2 Container Service (ECS) with Fargate
 
 This is directory uses your local XL Deploy to deploy the XL Platform to an AWS Fargate cluster. It's a bit inception like... I know.
 
