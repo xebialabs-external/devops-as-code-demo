@@ -53,9 +53,9 @@ Make sure you've already imported the AWSConfig in the `demo/ecs` example
 
 ## Step 4 - Import your AWS config into the ECS XL Deploy and XL Release
 
-1. Do all the `xl apply` commands in `ecs/demo` again but add `--config config.yaml` so it posts to the AWS endpoint.
+1. Import `config/configure-xl-devops-platform.yaml` but make sure to update the hostname/ip address (either in the YAML or afterwards in XL Release, you can find it in CloudWatch and the ECS console).. not sure yet how to make the hostnames routable in ECS yet (TODO.
 
-1. Also Import `config/configure-xl-devops-platform.yaml` but make sure to update the hostname/ip address (either in the YAML or afterwards in XL Release).. not sure yet how to make the hostnames routable in ECS yet (TODO)
+1. Do all the `xl apply` commands in `ecs/demo` again but add `--config demo/xl-playform/config.yaml` so it posts to the AWS endpoint. Make sure the hostname / ipaddress is correct.
 
 ## Work to be done
 
