@@ -43,17 +43,19 @@ Make sure you've already imported the AWSConfig in the `demo/ecs` example
 
 1. Go to the XL Deploy UI running on http://localhost:4516.
 
-2. Deploy xl-platform-ecs-fargate-cluster 1.0 to AWS
+1. Deploy xl-platform-ecs-fargate-cluster 1.0 to AWS
 
-3. Deploy xl-deploy-devops-as-code 1.0 to AWS
+1. Deploy xl-deploy-devops-as-code 1.0 to AWS
 
-4. Go to your [ECS Clusters](https://us-east-2.console.aws.amazon.com/ecs/home?region=us-east-2#/clusters) and find the IP Address by clicking on `username-xl-platform-ecs-cluster`, then `xl-platform-devops-as-code-server`, then `Tasks`, the task, and you'll see public IP. The shell script in this directory which should find the public IP for some reason doesn't work... TBD why.
+1. Go to your [ECS Clusters](https://us-east-2.console.aws.amazon.com/ecs/home?region=us-east-2#/clusters) and find the IP Address by clicking on `username-xl-platform-ecs-cluster`, then `xl-platform-devops-as-code-server`, then `Tasks`, the task, and you'll see public IP. The shell script in this directory which should find the public IP for some reason doesn't work... TBD why.
 
-5. Open XL Deploy and XL Release on the usual ports. The admin password is in the YAML.
+1. Open XL Deploy and XL Release on the usual ports. The admin password is in the YAML.
 
 ## Step 4 - Import your AWS config into the ECS XL Deploy and XL Release
 
-Do all the `xl apply` commands in `ecs/demo` again but add `--config config.yaml` so it posts to the AWS endpoint.
+1. Do all the `xl apply` commands in `ecs/demo` again but add `--config config.yaml` so it posts to the AWS endpoint.
+
+1. Also Import `config/configure-xl-devops-platform.yaml` but make sure to update the hostname/ip address (either in the YAML or afterwards in XL Release).. not sure yet how to make the hostnames routable in ECS yet (TODO)
 
 ## Work to be done
 
